@@ -594,21 +594,11 @@ body {
     font-weight: 500;
 }
 
-/* Remove spinner arrows from number inputs completely */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-
-/* Additional styling for clean number inputs */
-input[type="number"] {
-    appearance: textfield;
+/* Age input styling */
+#age {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
 /* Simple Radio Button Styling */
