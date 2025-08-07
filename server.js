@@ -303,7 +303,7 @@ app.get('/api/admin/stats', requireAdmin, (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`🎖️  FIZO202 Military Fitness Tracker running on port ${PORT}`);
+    console.log(`🎖️  FIZO202 Fitness Tracker running on port ${PORT}`);
     console.log(`🌐 Main page: http://localhost:${PORT}`);
     console.log(`👮 Admin panel: http://localhost:${PORT}/admin.html`);
     console.log(`🔑 Admin credentials: username=admin, password=fizo2025`);
