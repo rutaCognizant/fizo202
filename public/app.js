@@ -290,6 +290,93 @@ function getAgeGroup(age) {
     return '60+';
 }
 
+function getPersonalizedTargets(age, gender) {
+    // Simplified scoring ranges based on age and gender
+    const ageGroup = getAgeGroup(age);
+    
+    // Define scoring ranges for each exercise (60 points to 100 points range)
+    const scoringRanges = {
+        'pushups': {
+            'M': {
+                '18-25': { min60: '35 reps', max100: '50+ reps' },
+                '26-30': { min60: '32 reps', max100: '47+ reps' },
+                '31-35': { min60: '30 reps', max100: '45+ reps' },
+                '36-40': { min60: '28 reps', max100: '43+ reps' },
+                '41-45': { min60: '26 reps', max100: '41+ reps' },
+                '46-50': { min60: '24 reps', max100: '39+ reps' },
+                '51-55': { min60: '22 reps', max100: '37+ reps' },
+                '56-60': { min60: '20 reps', max100: '35+ reps' },
+                '60+': { min60: '18 reps', max100: '33+ reps' }
+            },
+            'F': {
+                '18-25': { min60: '25 reps', max100: '40+ reps' },
+                '26-30': { min60: '22 reps', max100: '37+ reps' },
+                '31-35': { min60: '20 reps', max100: '35+ reps' },
+                '36-40': { min60: '18 reps', max100: '33+ reps' },
+                '41-45': { min60: '16 reps', max100: '31+ reps' },
+                '46-50': { min60: '14 reps', max100: '29+ reps' },
+                '51-55': { min60: '12 reps', max100: '27+ reps' },
+                '56-60': { min60: '10 reps', max100: '25+ reps' },
+                '60+': { min60: '8 reps', max100: '23+ reps' }
+            }
+        },
+        'crunches': {
+            'M': {
+                '18-25': { min60: '42 reps', max100: '62+ reps' },
+                '26-30': { min60: '40 reps', max100: '60+ reps' },
+                '31-35': { min60: '38 reps', max100: '58+ reps' },
+                '36-40': { min60: '36 reps', max100: '56+ reps' },
+                '41-45': { min60: '34 reps', max100: '54+ reps' },
+                '46-50': { min60: '32 reps', max100: '52+ reps' },
+                '51-55': { min60: '30 reps', max100: '50+ reps' },
+                '56-60': { min60: '28 reps', max100: '48+ reps' },
+                '60+': { min60: '26 reps', max100: '46+ reps' }
+            },
+            'F': {
+                '18-25': { min60: '42 reps', max100: '62+ reps' },
+                '26-30': { min60: '40 reps', max100: '60+ reps' },
+                '31-35': { min60: '38 reps', max100: '58+ reps' },
+                '36-40': { min60: '36 reps', max100: '56+ reps' },
+                '41-45': { min60: '34 reps', max100: '54+ reps' },
+                '46-50': { min60: '32 reps', max100: '52+ reps' },
+                '51-55': { min60: '30 reps', max100: '50+ reps' },
+                '56-60': { min60: '28 reps', max100: '48+ reps' },
+                '60+': { min60: '26 reps', max100: '46+ reps' }
+            }
+        },
+        'run': {
+            'M': {
+                '18-25': { min60: '16:30', max100: '≤13:30' },
+                '26-30': { min60: '17:00', max100: '≤14:00' },
+                '31-35': { min60: '17:30', max100: '≤14:30' },
+                '36-40': { min60: '18:00', max100: '≤15:00' },
+                '41-45': { min60: '18:30', max100: '≤15:30' },
+                '46-50': { min60: '19:00', max100: '≤16:00' },
+                '51-55': { min60: '19:30', max100: '≤16:30' },
+                '56-60': { min60: '20:00', max100: '≤17:00' },
+                '60+': { min60: '20:30', max100: '≤17:30' }
+            },
+            'F': {
+                '18-25': { min60: '19:00', max100: '≤16:00' },
+                '26-30': { min60: '19:30', max100: '≤16:30' },
+                '31-35': { min60: '20:00', max100: '≤17:00' },
+                '36-40': { min60: '20:30', max100: '≤17:30' },
+                '41-45': { min60: '21:00', max100: '≤18:00' },
+                '46-50': { min60: '21:30', max100: '≤18:30' },
+                '51-55': { min60: '22:00', max100: '≤19:00' },
+                '56-60': { min60: '22:30', max100: '≤19:30' },
+                '60+': { min60: '23:00', max100: '≤20:00' }
+            }
+        }
+    };
+    
+    return {
+        pushups: scoringRanges.pushups[gender][ageGroup] || scoringRanges.pushups[gender]['18-25'],
+        crunches: scoringRanges.crunches[gender][ageGroup] || scoringRanges.crunches[gender]['18-25'],
+        run: scoringRanges.run[gender][ageGroup] || scoringRanges.run[gender]['18-25']
+    };
+}
+
 function generateFullScoringTables(gender) {
     // This would contain the full scoring tables
     // For now, return a simplified version
