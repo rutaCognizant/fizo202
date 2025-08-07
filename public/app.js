@@ -1,18 +1,6 @@
 // FIZO202 Fitness Tracker - Frontend JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Age input - only allow numbers
-    const ageInput = document.getElementById('age');
-    ageInput.addEventListener('input', function(e) {
-        // Remove any non-numeric characters
-        this.value = this.value.replace(/[^0-9]/g, '');
-        // Limit to reasonable age range (optional visual feedback)
-        if (this.value && (parseInt(this.value) < 1 || parseInt(this.value) > 120)) {
-            this.style.borderColor = '#ff6b6b';
-        } else {
-            this.style.borderColor = '';
-        }
-    });
     const form = document.getElementById('fitnessForm');
     const resultsSection = document.getElementById('resultsSection');
     const loadingSpinner = document.getElementById('loadingSpinner');
