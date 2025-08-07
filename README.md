@@ -1,10 +1,10 @@
-# FIZO202 Military Fitness Tracker 🎖️
+# FIZO202 Fitness Tracker 🎖️
 
-A web application to track military personnel fitness test results and calculate scores based on age and gender ranges.
+A web application to track fitness test results and calculate scores based on age and gender ranges.
 
 ## Features ✨
 
-- **📱 Mobile-friendly interface** for riflemen to enter results
+- **📱 Mobile-friendly interface** for users to enter results
 - **🏃‍♂️ Three exercise tracking**: Push-ups, Crunches, 3000m Run
 - **📊 Automatic scoring** based on age and gender ranges
 - **✅ Pass/Fail indicators** (60+ points per exercise required)
@@ -43,7 +43,7 @@ node server.js
 
 ## Scoring System 📈
 
-The application uses military fitness standards with age and gender-based scoring:
+The application uses fitness standards with age and gender-based scoring:
 
 - **Push-ups**: Scored based on repetitions
 - **Crunches**: Scored based on repetitions  
@@ -68,4 +68,4 @@ This application is configured for deployment on Render.com with automatic datab
 
 ## License 📄
 
-Military fitness tracking application - FIZO202
+Fitness tracking application - FIZO202
