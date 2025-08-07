@@ -1,6 +1,15 @@
 // FIZO202 Fitness Tracker - Frontend JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Clear age field and prevent auto-fill
+    const ageInput = document.getElementById('age');
+    ageInput.value = '';
+    ageInput.addEventListener('focus', function() {
+        if (this.value === '18' || this.value === '65') {
+            this.value = '';
+        }
+    });
+    
     const form = document.getElementById('fitnessForm');
     const resultsSection = document.getElementById('resultsSection');
     const loadingSpinner = document.getElementById('loadingSpinner');
