@@ -190,7 +190,7 @@ app.post('/api/admin/logout', (req, res) => {
 
 // Submit fitness results
 app.post('/api/submit-results', (req, res) => {
-    const { email, nickname, age, gender, pushups, crunches, runTime } = req.body;
+    const { email, nickname, 'user-age': age, gender, pushups, crunches, runTime } = req.body;
     
     // Validate input
     if (!email || !nickname || !age || !gender || pushups === undefined || crunches === undefined || !runTime) {

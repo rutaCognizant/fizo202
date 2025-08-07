@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Clear age field and prevent auto-fill
-    const ageInput = document.getElementById('age');
+    const ageInput = document.getElementById('user-age');
     ageInput.value = '';
     ageInput.addEventListener('focus', function() {
         if (this.value === '18' || this.value === '65') {
@@ -183,7 +183,7 @@ function submitAnother() {
 
 // Scoring Tables Functionality
 function openScoringTables() {
-    const age = document.getElementById('age').value;
+    const age = document.getElementById('user-age').value;
     const gender = document.querySelector('input[name="gender"]:checked')?.value;
     
     if (!age || !gender) {
