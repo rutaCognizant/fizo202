@@ -175,7 +175,7 @@ function submitAnother() {
 // Scoring Tables Functionality
 function openScoringTables() {
     const age = document.getElementById('age').value;
-    const gender = document.getElementById('gender').value;
+    const gender = document.querySelector('input[name="gender"]:checked')?.value;
     
     if (!age || !gender) {
         alert('Please enter your age and select gender first to see personalized targets!');
