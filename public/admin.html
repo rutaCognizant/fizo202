@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👮 FIZO202 Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Login Section -->
+        <div id="loginSection" class="login-container">
+            <div class="login-header">
+                <h2>🔐 Admin Login</h2>
+                <p>🎖️ FIZO202 Military Fitness Tracker</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">👤 Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">🔑 Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn">
+                        🚪 Login to Admin Panel
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" style="display: none;">
+            <!-- Header -->
+            <div class="admin-header">
+                <h1>📊 🎖️ FIZO202 Admin Dashboard</h1>
+                <p>Monitor fitness test results and system activity</p>
+                <div style="margin-top: 15px;">
+                    <a href="/" class="secondary-btn">🏠 Main Page</a>
+                    <button onclick="logout()" class="secondary-btn" style="margin-left: 10px;">🚪 Logout</button>
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="admin-section">
+                <h2>📈 System Statistics</h2>
+                <div class="stats-grid" id="statsGrid">
+                    <!-- Stats will be loaded here -->
+                </div>
+            </div>
+
+            <!-- All Results Section -->
+            <div class="admin-section">
+                <h2>📋 All Fitness Results</h2>
+                <div class="table-container">
+                    <table class="data-table" id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>📧 Email</th>
+                                <th>🏷️ Nickname</th>
+                                <th>🎂 Age</th>
+                                <th>⚥ Gender</th>
+                                <th>🔥 Push-ups</th>
+                                <th>🏋️ Crunches</th>
+                                <th>🏃‍♂️ Run</th>
+                                <th>📊 Total</th>
+                                <th>✅ Status</th>
+                                <th>📅 Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTableBody">
+                            <!-- Results will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Activity Log Section -->
+            <div class="admin-section">
+                <h2>📝 Activity Log</h2>
+                <div class="table-container">
+                    <table class="data-table" id="activityTable">
+                        <thead>
+                            <tr>
+                                <th>🎬 Action</th>
+                                <th>📧 Email</th>
+                                <th>🏷️ Nickname</th>
+                                <th>📋 Details</th>
+                                <th>🌐 IP Address</th>
+                                <th>📅 Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activityTableBody">
+                            <!-- Activity log will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin Dashboard JavaScript
+        let isLoggedIn = false;
+
+        // Check login status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Try to load dashboard data (will fail if not authenticated)
+            loadDashboard();
+        });
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const credentials = {
+                username: formData.get('username'),
+                password: formData.get('password')
+            };
+
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(credentials)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    isLoggedIn = true;
+                    document.getElementById('loginSection').style.display = 'none';
+                    document.getElementById('adminDashboard').style.display = 'block';
+                    loadDashboard();
+                } else {
+                    alert('Invalid credentials. Please try again.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed. Please try again.');
+            }
+        });
+
+        // Load dashboard data
+        async function loadDashboard() {
+            try {
+                // Load statistics
+                const statsResponse = await fetch('/api/admin/stats');
+                if (statsResponse.ok) {
+                    const stats = await statsResponse.json();
+                    displayStats(stats);
+                    
+                    // Show dashboard if stats loaded successfully
+                    if (!isLoggedIn) {
+                        isLoggedIn = true;
+                        document.getElementById('loginSection').style.display = 'none';
+                        document.getElementById('adminDashboard').style.display = 'block';
+                    }
+                } else {
+                    // Not authenticated, show login
+                    document.getElementById('loginSection').style.display = 'block';
+                    document.getElementById('adminDashboard').style.display = 'none';
+                    return;
+                }
+
+                // Load results
+                const resultsResponse = await fetch('/api/admin/results');
+                if (resultsResponse.ok) {
+                    const results = await resultsResponse.json();
+                    displayResults(results);
+                }
+
+                // Load activity log
+                const activityResponse = await fetch('/api/admin/activity-log');
+                if (activityResponse.ok) {
+                    const activities = await activityResponse.json();
+                    displayActivityLog(activities);
+                }
+
+            } catch (error) {
+                console.error('Dashboard load error:', error);
+                // Show login on error
+                document.getElementById('loginSection').style.display = 'block';
+                document.getElementById('adminDashboard').style.display = 'none';
+            }
+        }
+
+        // Display statistics
+        function displayStats(stats) {
+            const statsGrid = document.getElementById('statsGrid');
+            const passRate = stats.total_results > 0 ? ((stats.passed_tests / stats.total_results) * 100).toFixed(1) : 0;
+            
+            statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${stats.total_results || 0}</div>
+                    <div class="stat-label">Total Results</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.passed_tests || 0}</div>
+                    <div class="stat-label">Passed Tests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${passRate}%</div>
+                    <div class="stat-label">Pass Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${Math.round(stats.avg_total_points || 0)}</div>
+                    <div class="stat-label">Avg Total Points</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${Math.round(stats.avg_pushups_points || 0)}</div>
+                    <div class="stat-label">Avg Push-ups</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${Math.round(stats.avg_crunches_points || 0)}</div>
+                    <div class="stat-label">Avg Crunches</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${Math.round(stats.avg_run_points || 0)}</div>
+                    <div class="stat-label">Avg Run</div>
+                </div>
+            `;
+        }
+
+        // Display results table
+        function displayResults(results) {
+            const tbody = document.getElementById('resultsTableBody');
+            tbody.innerHTML = results.map(result => `
+                <tr>
+                    <td>${result.email}</td>
+                    <td>${result.nickname}</td>
+                    <td>${result.age}</td>
+                    <td>${result.gender === 'M' ? 'Male' : 'Female'}</td>
+                    <td>${result.pushups} (${result.pushups_points}pts)</td>
+                    <td>${result.crunches} (${result.crunches_points}pts)</td>
+                    <td>${result.run_time} (${result.run_points}pts)</td>
+                    <td><strong>${result.total_points}/300</strong></td>
+                    <td>
+                        <span class="${result.passes_test ? 'pass-indicator' : 'fail-indicator'}">
+                            ${result.passes_test ? '✅ PASS' : '❌ FAIL'}
+                        </span>
+                    </td>
+                    <td>${new Date(result.created_at).toLocaleString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Display activity log
+        function displayActivityLog(activities) {
+            const tbody = document.getElementById('activityTableBody');
+            tbody.innerHTML = activities.map(activity => `
+                <tr>
+                    <td><strong>${activity.action.replace(/_/g, ' ').toUpperCase()}</strong></td>
+                    <td>${activity.email || '-'}</td>
+                    <td>${activity.nickname || '-'}</td>
+                    <td>${activity.details || '-'}</td>
+                    <td>${activity.ip_address || '-'}</td>
+                    <td>${new Date(activity.created_at).toLocaleString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Logout function
+        async function logout() {
+            try {
+                await fetch('/api/admin/logout', { method: 'POST' });
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+            
+            isLoggedIn = false;
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('adminDashboard').style.display = 'none';
+            document.getElementById('loginForm').reset();
+        }
+
+        // Auto-refresh dashboard every 30 seconds
+        setInterval(() => {
+            if (isLoggedIn) {
+                loadDashboard();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
