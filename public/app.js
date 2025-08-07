@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const data = {
             email: formData.get('email'),
             nickname: formData.get('nickname'),
-            age: parseInt(formData.get('age')),
+            'user-age': parseInt(formData.get('user-age')),
             gender: formData.get('gender'),
             pushups: parseInt(formData.get('pushups')),
             crunches: parseInt(formData.get('crunches')),
