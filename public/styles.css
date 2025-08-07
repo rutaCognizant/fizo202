@@ -1,4 +1,4 @@
-/* FIZO202 Military Fitness Tracker Styles */
+/* FIZO202 Fitness Tracker Styles */
 
 * {
     margin: 0;
@@ -8,7 +8,7 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
     min-height: 100vh;
     color: #333;
     line-height: 1.6;
@@ -58,7 +58,7 @@ body {
 
 .section h2 {
     font-size: 1.4rem;
-    color: #2a5298;
+    color: #2d5016;
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 2px solid #e8f2ff;
@@ -118,7 +118,7 @@ body {
 }
 
 .exercise-header h3 {
-    color: #2a5298;
+    color: #2d5016;
     font-size: 1.2rem;
 }
 
@@ -138,7 +138,7 @@ body {
 }
 
 .submit-btn {
-    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+    background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);
     color: white;
     border: none;
     padding: 16px 32px;
@@ -169,7 +169,7 @@ body {
 }
 
 .results-section h2 {
-    color: #2a5298;
+    color: #2d5016;
     margin-bottom: 25px;
     text-align: center;
 }
@@ -201,7 +201,7 @@ body {
 }
 
 .result-card h3 {
-    color: #2a5298;
+    color: #2d5016;
     margin-bottom: 15px;
 }
 
@@ -248,7 +248,7 @@ body {
 .total-result {
     text-align: center;
     padding: 25px;
-    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+    background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);
     border-radius: 12px;
     color: white;
     margin-bottom: 25px;
@@ -380,7 +380,7 @@ body {
 }
 
 .admin-section h2 {
-    color: #2a5298;
+    color: #2d5016;
     margin-bottom: 20px;
     border-bottom: 2px solid #e8f2ff;
     padding-bottom: 10px;
@@ -407,7 +407,7 @@ body {
 .data-table th {
     background: #f8fbff;
     font-weight: 600;
-    color: #2a5298;
+    color: #2d5016;
 }
 
 .data-table tr:hover {
@@ -441,7 +441,7 @@ body {
 }
 
 .stat-card {
-    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+    background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);
     color: white;
     padding: 20px;
     border-radius: 12px;
@@ -475,7 +475,7 @@ body {
 }
 
 .login-header h2 {
-    color: #2a5298;
+    color: #2d5016;
     margin-bottom: 10px;
 }
 
@@ -536,4 +536,60 @@ body {
     .stat-number {
         font-size: 1.5rem;
     }
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(74, 124, 89, 0.4);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 124, 89, 0.6);
+}
+
+/* Scoring Tables Section */
+.scoring-tables-section {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #f0f8f0;
+    border-radius: 12px;
+    border: 2px dashed #4a7c59;
+}
+
+.scoring-btn {
+    background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(74, 124, 89, 0.4);
+    margin-bottom: 8px;
+}
+
+.scoring-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 124, 89, 0.6);
+}
+
+.scoring-help {
+    font-size: 0.9rem;
+    color: #2d5016;
+    margin: 0;
+    font-weight: 500;
 }

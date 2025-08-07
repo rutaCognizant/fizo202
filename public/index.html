@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎖️ FIZO202 Military Fitness Tracker</title>
+    <title>🎖️ FIZO202 Fitness Tracker</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -11,7 +11,7 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1>🎖️ FIZO202 Military Fitness Tracker</h1>
+            <h1>🪖 FIZO202 Fitness Tracker</h1>
             <p>Track your push-ups, crunches, and 3000m run performance</p>
         </header>
 
@@ -34,7 +34,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="age">🎂 Age</label>
-                            <input type="number" id="age" name="age" min="18" max="65" required>
+                            <input type="number" id="age" name="age" required>
                         </div>
                         <div class="form-group">
                             <label for="gender">⚥ Gender</label>
@@ -53,23 +53,23 @@
                     
                     <div class="exercise-group">
                         <div class="exercise-header">
-                            <h3>🔥 Push-ups</h3>
+                            <h3>💪 Push-ups</h3>
                             <span class="requirement">Minimum: 60 points</span>
                         </div>
                         <div class="form-group">
                             <label for="pushups">Number of repetitions</label>
-                            <input type="number" id="pushups" name="pushups" min="0" max="100" required>
+                            <input type="number" id="pushups" name="pushups" required>
                         </div>
                     </div>
 
                     <div class="exercise-group">
                         <div class="exercise-header">
-                            <h3>🏋️ Crunches</h3>
+                            <h3>🤸‍♂️ Crunches (Abs)</h3>
                             <span class="requirement">Minimum: 60 points</span>
                         </div>
                         <div class="form-group">
                             <label for="crunches">Number of repetitions</label>
-                            <input type="number" id="crunches" name="crunches" min="0" max="100" required>
+                            <input type="number" id="crunches" name="crunches" required>
                         </div>
                     </div>
 
@@ -81,14 +81,22 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="runMinutes">Minutes</label>
-                                <input type="number" id="runMinutes" name="runMinutes" min="10" max="40" required>
+                                <input type="number" id="runMinutes" name="runMinutes" required>
                             </div>
                             <div class="form-group">
                                 <label for="runSeconds">Seconds</label>
-                                <input type="number" id="runSeconds" name="runSeconds" min="0" max="59" required>
+                                <input type="number" id="runSeconds" name="runSeconds" required>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Scoring Tables Link -->
+                <div class="scoring-tables-section">
+                    <button type="button" onclick="openScoringTables()" class="scoring-btn">
+                        📋 View Scoring Tables
+                    </button>
+                    <p class="scoring-help">See what you need for 60 and 100 points based on your age</p>
                 </div>
 
                 <!-- Submit Button -->
@@ -106,7 +114,7 @@
             
             <div class="results-grid">
                 <div class="result-card" id="pushupsResult">
-                    <h3>🔥 Push-ups</h3>
+                    <h3>💪 Push-ups</h3>
                     <div class="result-value">
                         <span id="pushupsReps">-</span> reps
                     </div>
@@ -117,7 +125,7 @@
                 </div>
 
                 <div class="result-card" id="crunchesResult">
-                    <h3>🏋️ Crunches</h3>
+                    <h3>🤸‍♂️ Crunches (Abs)</h3>
                     <div class="result-value">
                         <span id="crunchesReps">-</span> reps
                     </div>
@@ -166,7 +174,7 @@
                 <span class="separator">|</span>
                 <span class="version">FIZO202 v1.0.0</span>
             </div>
-            <p>&copy; 2024 Military Fitness Tracker. Built for excellence.</p>
+            <p>&copy; 2024 FIZO202 Fitness Tracker. Built for excellence.</p>
         </footer>
     </div>
 
