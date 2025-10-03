@@ -1,7 +1,7 @@
 {
   "name": "fizo202-fitness-tracker",
   "version": "1.0.0",
-  "description": "🎖️ FIZO202 Fitness Tracker - Track push-ups, crunches, and 3000m run results with age/gender-based scoring",
+  "description": "🕹️ FIZO202 Fitness Tracker - Track push-ups, crunches, and 3000m run results with age/gender-based scoring",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

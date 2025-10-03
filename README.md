@@ -1,4 +1,4 @@
-# FIZO202 Fitness Tracker 🎖️
+# FIZO202 Fitness Tracker 🕹️
 
 A web application to track fitness test results and calculate scores based on age and gender ranges.
 
