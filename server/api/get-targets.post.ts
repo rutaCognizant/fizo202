@@ -52,16 +52,16 @@ export default defineEventHandler(async (event): Promise<TargetsResponse> => {
   const running60 = runningPoints.find((e) => e.points === 60)?.seconds || 0;
   const running100 = runningPoints.find((e) => e.points === 100)?.seconds || 0;
 
-  console.log({
-    age,
-    gender,
-    pushup60,
-    pushup100,
-    crunches60,
-    crunches100,
-    running60,
-    running100,
-  });
+  // console.log({
+  //   age,
+  //   gender,
+  //   pushup60,
+  //   pushup100,
+  //   crunches60,
+  //   crunches100,
+  //   running60,
+  //   running100,
+  // });
 
   return {
     pushup60,

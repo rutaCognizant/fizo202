@@ -49,7 +49,7 @@ export default defineEventHandler(async (event): Promise<ActivityResponse> => {
     },
     orderBy: [{ age: "desc" }, { count: "desc" }],
   });
-  console.log({ pushupPoints });
+  // console.log({ pushupPoints });
 
   const crunchesPoints = await prisma.crunchesPoints.findFirst({
     where: {
@@ -59,7 +59,7 @@ export default defineEventHandler(async (event): Promise<ActivityResponse> => {
     },
     orderBy: [{ age: "desc" }, { count: "desc" }],
   });
-  console.log({ crunchesPoints });
+  // console.log({ crunchesPoints });
 
   const runningPoints = await prisma.runningPoints.findFirst({
     where: {
@@ -69,7 +69,7 @@ export default defineEventHandler(async (event): Promise<ActivityResponse> => {
     },
     orderBy: [{ age: "desc" }, { seconds: "asc" }],
   });
-  console.log({ runningPoints });
+  // console.log({ runningPoints });
 
   return {
     activity,
