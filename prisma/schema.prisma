@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int        @id @default(autoincrement())
+  name       String?
+  age        Int?
+  gender     String?
+  activities Activity[]
+}
+
+model Activity {
+  id        Int      @id @default(autoincrement())
+  pushups   Int      @default(0)
+  crunches  Int      @default(0)
+  running   Int      @default(0) // in seconds
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PushupPoints {
+  age    Int
+  gender String
+  count  Int
+  points Int
+
+  @@id([age, gender, count])
+}
+
+model CrunchesPoints {
+  age    Int
+  gender String
+  count  Int
+  points Int
+
+  @@id([age, gender, count])
+}
+
+model RunningPoints {
+  age     Int
+  gender  String
+  seconds Int
+  points  Int
+
+  @@id([age, gender, seconds])
+}
