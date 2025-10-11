@@ -570,11 +570,21 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(74, 124, 89, 0.4);
   margin-bottom: 8px;
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 }
 
 .scoring-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(74, 124, 89, 0.6);
+}
+
+.scoring-btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .scoring-help {

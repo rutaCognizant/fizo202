@@ -1,5 +1,7 @@
 import type { Activity, User } from '@prisma/client';
-import prisma from '~/../lib/prisma';
+import prisma from '~~/lib/prisma';
+
+import { calculatePoints } from '~~/server/lib';
 
 interface ActivityResponse {
   activity: Activity;
@@ -41,41 +43,7 @@ export default defineEventHandler(async (event): Promise<ActivityResponse> => {
 
   const user = activity.user;
 
-  const pushupPointsRez = await prisma.pushupPoints.findFirst({
-    select: { points: true },
-    where: {
-      age: { lte: user.age || 0 },
-      gender: user.gender || undefined,
-      count: { lte: activity.pushups },
-    },
-    orderBy: [{ age: 'desc' }, { count: 'desc' }],
-  });
-  const pushupPoints = Math.min(pushupPointsRez?.points || 0, 100);
-  // console.log({ pushupPoints });
-
-  const crunchesPointsRez = await prisma.crunchesPoints.findFirst({
-    select: { points: true },
-    where: {
-      age: { lte: user.age || 0 },
-      gender: user.gender || undefined,
-      count: { lte: activity.crunches },
-    },
-    orderBy: [{ age: 'desc' }, { count: 'desc' }],
-  });
-  const crunchesPoints = Math.min(crunchesPointsRez?.points || 0, 100);
-  // console.log({ crunchesPoints });
-
-  const runningPointsRez = await prisma.runningPoints.findFirst({
-    select: { points: true },
-    where: {
-      age: { lte: user.age || 0 },
-      gender: user.gender || undefined,
-      seconds: { gte: activity.running },
-    },
-    orderBy: [{ age: 'desc' }, { seconds: 'asc' }],
-  });
-  const runningPoints = Math.min(runningPointsRez?.points || 0, 100);
-  // console.log({ runningPoints });
+  const { pushupPoints, crunchesPoints, runningPoints } = await calculatePoints(user, activity);
 
   return {
     activity,

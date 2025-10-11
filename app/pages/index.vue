@@ -1,12 +1,17 @@
 <script setup lang="ts">
-const name: string = '';
-const age: number | null = null;
-const gender: 'M' | 'F' | null = null;
 
-const pushups: number | null = null;
-const crunches: number | null = null;
-const runMinutes: number | null = null;
-const runSeconds: number | null = null;
+const name = ref<string>('');
+const age = ref<number | null>(null);
+const gender = ref<'M' | 'F' | null>(null);
+
+const pushups = ref<number | null>(null);
+const crunches = ref<number | null>(null);
+const runMinutes = ref<number | null>(null);
+const runSeconds = ref<number | null>(null);
+
+const scoringTableDisabled = computed(() => {
+  return age.value === null || gender.value === null;
+});
 
 const openScoringTables = () => {
   const width = 900;
@@ -14,22 +19,27 @@ const openScoringTables = () => {
   const left = (window.innerWidth - width) / 2;
   const top = (window.innerHeight - height) / 2;
   window.open(
-    `/scoring-table?age=${age}&gender=${gender}`,
+    `/scoring-table?age=${age.value}&gender=${gender.value}`,
     'Scoring Tables',
     `width=${width},height=${height},top=${top},left=${left}`
   );
 };
 
 const submitResults = async (_event: Event) => {
+  const runningSeconds =
+    runMinutes.value !== null && runSeconds.value !== null
+      ? runMinutes.value * 60 + runSeconds.value
+      : null;
+
   const results = await $fetch('/api/activities', {
     method: 'POST',
     body: {
-      name: name,
-      age: age,
-      gender: gender,
-      pushups: pushups,
-      crunches: crunches,
-      running: runMinutes !== null && runSeconds !== null ? runMinutes * 60 + runSeconds : null,
+      name: name.value,
+      age: age.value,
+      gender: gender.value,
+      pushups: pushups.value,
+      crunches: crunches.value,
+      running: runningSeconds,
     },
   });
 
@@ -59,19 +69,8 @@ const submitResults = async (_event: Event) => {
             </div>
             <div class="form-group">
               <label for="user-age">🎂 Age</label>
-              <input
-                id="user-age"
-                v-model="age"
-                type="number"
-                name="user-age"
-                min="1"
-                max="120"
-                autocomplete="off"
-                autocapitalize="off"
-                autocorrect="off"
-                spellcheck="false"
-                required
-              />
+              <input id="user-age" v-model="age" type="number" name="user-age" min="1" max="120" autocomplete="off"
+                autocapitalize="off" autocorrect="off" spellcheck="false" required />
             </div>
           </div>
           <div class="form-row">
@@ -93,7 +92,8 @@ const submitResults = async (_event: Event) => {
 
         <!-- Scoring Tables Link -->
         <div class="scoring-tables-section">
-          <button type="button" class="scoring-btn" @click="openScoringTables">📋 View Scoring Tables</button>
+          <button type="button" class="scoring-btn" :disabled="scoringTableDisabled" @click="openScoringTables">📋 View
+            Scoring Tables</button>
           <!-- <p class="scoring-help">
             See what you need for 60 and 100 points based on your age
           </p> -->

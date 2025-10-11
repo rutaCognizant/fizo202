@@ -5,6 +5,7 @@ import { formatTime } from '~/utils';
 const age = ref<number | null>(null);
 const gender = ref<'M' | 'F' | null>(null);
 const route = useRoute();
+
 if (route.query.age) {
   age.value = parseInt(route.query.age as string, 10);
 }
@@ -22,6 +23,7 @@ const { pushup60, pushup100, crunches60, crunches100, running60, running100 } = 
 </script>
 
 <template>
+
   <body>
     <div class="header">
       <h1>🪖 FIZO202 Scoring Tables</h1>

@@ -1,3 +1,24 @@
+<script setup lang="ts">
+
+const getReport = async () => {
+  const reportData = await $fetch('/api/activities/report', {
+    method: 'POST',
+  });
+
+  // Download xlsx file
+  const blob = new Blob([reportData as ArrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'fizo202_report.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+</script>
+
 <template>
   <div class="admin-container">
     <!-- <Login /> -->
@@ -16,14 +37,19 @@
 
       <!-- Statistics Section -->
       <div class="admin-section">
-        <h2>📈 System Statistics</h2>
+        <!-- <h2>📈 System Statistics</h2>
         <div id="statsGrid" class="stats-grid">
-          <!-- Stats will be loaded here -->
-        </div>
+          Stats will be loaded here
+        </div> -->
+
+        <h2>📥 Download Reports</h2>
+        <button class="secondary-btn" style="margin-bottom: 20px" @click="getReport">
+          Download Excel Report
+        </button>
       </div>
 
       <!-- All Results Section -->
-      <div class="admin-section">
+      <!-- <div class="admin-section">
         <h2>📋 All Fitness Results</h2>
         <div class="table-container">
           <table id="resultsTable" class="data-table">
@@ -42,14 +68,14 @@
               </tr>
             </thead>
             <tbody id="resultsTableBody">
-              <!-- Results will be loaded here -->
+              Results will be loaded here
             </tbody>
           </table>
         </div>
-      </div>
+      </div> -->
 
       <!-- Activity Log Section -->
-      <div class="admin-section">
+      <!-- <div class="admin-section">
         <h2>📝 Activity Log</h2>
         <div class="table-container">
           <table id="activityTable" class="data-table">
@@ -64,11 +90,11 @@
               </tr>
             </thead>
             <tbody id="activityTableBody">
-              <!-- Activity log will be loaded here -->
+              Activity log will be loaded here
             </tbody>
           </table>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
