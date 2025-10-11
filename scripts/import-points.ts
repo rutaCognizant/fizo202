@@ -1,5 +1,5 @@
-import ExcelJS from "exceljs";
-import { PrismaClient } from "@prisma/client";
+import ExcelJS from 'exceljs';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -21,31 +21,23 @@ function importPushupPoints(pushups: ExcelJS.Worksheet) {
     row.eachCell({ includeEmpty: false }, (cell, colNumber) => {
       if (colNumber <= 2) return; // Skip first 2 columns
 
-      let points = cell.value as number;
+      const points = cell.value as number;
 
       if (isNaN(points)) {
         return;
       }
 
-      if (points > 100) {
-        points = 100;
-      }
-
       const ageRange = pushups.getRow(1).getCell(colNumber).value as string;
       let gender = pushups.getRow(2).getCell(colNumber).value as string;
 
-      if (gender === "V") {
-        gender = "male";
-      } else if (gender === "M") {
-        gender = "female";
+      if (gender === 'V') {
+        gender = 'male';
+      } else if (gender === 'M') {
+        gender = 'female';
       }
 
-      const [minAge, maxAge] = ageRange.split("-").map((age) => parseInt(age));
+      const [minAge, _maxAge] = ageRange.split('-').map((age) => parseInt(age));
       // console.log({ [`${minAge}-${maxAge}`]: points, gender });
-
-      // for (let age = minAge; age <= maxAge; age++) {
-      //   console.log({ age, gender });
-      // }
 
       pushupPoints.push({
         age: minAge,
@@ -75,26 +67,22 @@ function importCrunchesPoints(crunches: ExcelJS.Worksheet) {
     row.eachCell({ includeEmpty: false }, (cell, colNumber) => {
       if (colNumber <= 2) return; // Skip first 2 columns
 
-      let points = cell.value as number;
+      const points = cell.value as number;
 
       if (isNaN(points)) {
         return;
       }
 
-      if (points > 100) {
-        points = 100;
-      }
-
       const ageRange = crunches.getRow(1).getCell(colNumber).value as string;
       const genders = crunches.getRow(2).getCell(colNumber).value as string;
 
-      const [minAge, maxAge] = ageRange.split("-").map((age) => parseInt(age));
+      const [minAge, _maxAge] = ageRange.split('-').map((age) => parseInt(age));
 
-      for (let gender of genders.split("/")) {
-        if (gender === "V") {
-          gender = "male";
-        } else if (gender === "M") {
-          gender = "female";
+      for (let gender of genders.split('/')) {
+        if (gender === 'V') {
+          gender = 'male';
+        } else if (gender === 'M') {
+          gender = 'female';
         }
 
         crunchesPoints.push({
@@ -126,26 +114,22 @@ function importRunningPoints(running: ExcelJS.Worksheet) {
     row.eachCell({ includeEmpty: false }, (cell, colNumber) => {
       if (colNumber <= 2) return; // Skip first 2 columns
 
-      let points = cell.value as number;
+      const points = cell.value as number;
 
       if (isNaN(points)) {
         return;
       }
 
-      if (points > 100) {
-        points = 100;
-      }
-
       const ageRange = running.getRow(1).getCell(colNumber).value as string;
       let gender = running.getRow(2).getCell(colNumber).value as string;
 
-      if (gender === "V") {
-        gender = "male";
-      } else if (gender === "M") {
-        gender = "female";
+      if (gender === 'V') {
+        gender = 'male';
+      } else if (gender === 'M') {
+        gender = 'female';
       }
 
-      const [minAge, maxAge] = ageRange.split("-").map((age) => parseInt(age));
+      const [minAge, _maxAge] = ageRange.split('-').map((age) => parseInt(age));
 
       runningPoints.push({
         age: minAge,
@@ -161,7 +145,7 @@ function importRunningPoints(running: ExcelJS.Worksheet) {
 
 async function importPoints() {
   const workbook = new ExcelJS.Workbook();
-  await workbook.xlsx.readFile("202.xlsx");
+  await workbook.xlsx.readFile('202.xlsx');
 
   const pushups = workbook.worksheets[0];
   const crunches = workbook.worksheets[1];

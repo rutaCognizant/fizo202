@@ -1,28 +1,26 @@
 <script setup lang="ts">
+const name: string = '';
+const age: number | null = null;
+const gender: 'M' | 'F' | null = null;
 
-let name: string = ''
-let age: number | null = null
-let gender: 'M' | 'F' | null = null
-
-let pushups: number | null = null
-let crunches: number | null = null
-let runMinutes: number | null = null
-let runSeconds: number | null = null
+const pushups: number | null = null;
+const crunches: number | null = null;
+const runMinutes: number | null = null;
+const runSeconds: number | null = null;
 
 const openScoringTables = () => {
-  const width = 900
-  const height = 700
-  const left = (window.innerWidth - width) / 2
-  const top = (window.innerHeight - height) / 2
+  const width = 900;
+  const height = 700;
+  const left = (window.innerWidth - width) / 2;
+  const top = (window.innerHeight - height) / 2;
   window.open(
     `/scoring-table?age=${age}&gender=${gender}`,
     'Scoring Tables',
     `width=${width},height=${height},top=${top},left=${left}`
-  )
-}
+  );
+};
 
-const submitResults = async (event: Event) => {
-
+const submitResults = async (_event: Event) => {
   const results = await $fetch('/api/activities', {
     method: 'POST',
     body: {
@@ -33,13 +31,12 @@ const submitResults = async (event: Event) => {
       crunches: crunches,
       running: runMinutes !== null && runSeconds !== null ? runMinutes * 60 + runSeconds : null,
     },
-  })
+  });
 
   navigateTo({
     path: `/results/${results.id}`,
-  })
-}
-
+  });
+};
 </script>
 
 <template>
@@ -58,12 +55,23 @@ const submitResults = async (event: Event) => {
           <div class="form-row">
             <div class="form-group">
               <label for="nickname">🏷️ Nickname</label>
-              <input type="text" v-model="name" id="nickname" name="nickname" required />
+              <input id="nickname" v-model="name" type="text" name="nickname" required />
             </div>
             <div class="form-group">
               <label for="user-age">🎂 Age</label>
-              <input type="number" v-model="age" id="user-age" name="user-age" min="1" max="120" autocomplete="off"
-                autocapitalize="off" autocorrect="off" spellcheck="false" required />
+              <input
+                id="user-age"
+                v-model="age"
+                type="number"
+                name="user-age"
+                min="1"
+                max="120"
+                autocomplete="off"
+                autocapitalize="off"
+                autocorrect="off"
+                spellcheck="false"
+                required
+              />
             </div>
           </div>
           <div class="form-row">
@@ -71,11 +79,11 @@ const submitResults = async (event: Event) => {
               <label>⚥ Gender</label>
               <div class="radio-group">
                 <label>
-                  <input type="radio" v-model="gender" :value="'male'" name="gender" required />
+                  <input v-model="gender" type="radio" :value="'male'" name="gender" required />
                   Male
                 </label>
                 <label>
-                  <input type="radio" v-model="gender" :value="'female'" name="gender" required />
+                  <input v-model="gender" type="radio" :value="'female'" name="gender" required />
                   Female
                 </label>
               </div>
@@ -85,9 +93,7 @@ const submitResults = async (event: Event) => {
 
         <!-- Scoring Tables Link -->
         <div class="scoring-tables-section">
-          <button type="button" @click="openScoringTables" class="scoring-btn">
-            📋 View Scoring Tables
-          </button>
+          <button type="button" class="scoring-btn" @click="openScoringTables">📋 View Scoring Tables</button>
           <!-- <p class="scoring-help">
             See what you need for 60 and 100 points based on your age
           </p> -->
@@ -103,17 +109,17 @@ const submitResults = async (event: Event) => {
             </div>
             <div class="form-group">
               <label for="pushups">Number of repetitions</label>
-              <input type="number" v-model="pushups" id="pushups" name="pushups" required />
+              <input id="pushups" v-model="pushups" type="number" name="pushups" required />
             </div>
           </div>
 
           <div class="exercise-group">
             <div class="exercise-header">
-              <h3>🤸‍♂️ Crunches (Abs)</h3>
+              <h3>🤸‍♂️ Crunches</h3>
             </div>
             <div class="form-group">
               <label for="crunches">Number of repetitions</label>
-              <input type="number" v-model="crunches" id="crunches" name="crunches" required />
+              <input id="crunches" v-model="crunches" type="number" name="crunches" required />
             </div>
           </div>
 
@@ -124,11 +130,11 @@ const submitResults = async (event: Event) => {
             <div class="form-row">
               <div class="form-group">
                 <label for="runMinutes">Minutes</label>
-                <input type="number" v-model="runMinutes" id="runMinutes" name="runMinutes" min="0" max="59" required />
+                <input id="runMinutes" v-model="runMinutes" type="number" name="runMinutes" min="0" max="59" required />
               </div>
               <div class="form-group">
                 <label for="runSeconds">Seconds</label>
-                <input type="number" v-model="runSeconds" id="runSeconds" name="runSeconds" min="0" max="59" required />
+                <input id="runSeconds" v-model="runSeconds" type="number" name="runSeconds" min="0" max="59" required />
               </div>
             </div>
           </div>
@@ -136,16 +142,14 @@ const submitResults = async (event: Event) => {
 
         <!-- Submit Button -->
         <div class="submit-section">
-          <button type="submit" class="submit-btn">
-            📊 Calculate My Fitness Score
-          </button>
+          <button type="submit" class="submit-btn">📊 Calculate My Fitness Score</button>
         </div>
       </form>
     </div>
 
     <!-- Loading Spinner -->
     <div id="loadingSpinner" class="loading-spinner" style="display: none">
-      <div class="spinner"></div>
+      <div class="spinner" />
       <p>Calculating your fitness score...</p>
     </div>
 
@@ -162,5 +166,5 @@ const submitResults = async (event: Event) => {
 </template>
 
 <style>
-@import url("~/assets/styles.css");
+@import url('~/assets/styles.css');
 </style>

@@ -1,4 +1,4 @@
-import prisma from "~/../lib/prisma";
+import prisma from '~/../lib/prisma';
 
 interface TargetsResponse {
   pushup60: number;
@@ -10,16 +10,16 @@ interface TargetsResponse {
 }
 
 export default defineEventHandler(async (event): Promise<TargetsResponse> => {
-  const body = await readBody(event);
+  const { age: userAge, gender } = await readBody(event);
 
-  const { age, gender } = body;
+  const age = Math.max(18, Math.min(65, userAge)); // Clamp age between 18 and 65
 
   let pushupPoints = await prisma.pushupPoints.findMany({
     where: {
       age: { lte: age },
       gender,
     },
-    orderBy: [{ age: "desc" }, { points: "desc" }],
+    orderBy: { age: 'desc' },
   });
   pushupPoints = pushupPoints.filter((e) => e.age === pushupPoints[0].age);
 
@@ -31,11 +31,9 @@ export default defineEventHandler(async (event): Promise<TargetsResponse> => {
       age: { lte: age },
       gender,
     },
-    orderBy: [{ age: "desc" }, { points: "desc" }],
+    orderBy: { age: 'desc' },
   });
-  crunchesPoints = crunchesPoints.filter(
-    (e) => e.age === crunchesPoints[0].age
-  );
+  crunchesPoints = crunchesPoints.filter((e) => e.age === crunchesPoints[0].age);
 
   const crunches60 = crunchesPoints.find((e) => e.points === 60)?.count || 0;
   const crunches100 = crunchesPoints.find((e) => e.points === 100)?.count || 0;
@@ -45,7 +43,7 @@ export default defineEventHandler(async (event): Promise<TargetsResponse> => {
       age: { lte: age },
       gender,
     },
-    orderBy: [{ age: "desc" }, { points: "asc" }],
+    orderBy: { age: 'desc' },
   });
   runningPoints = runningPoints.filter((e) => e.age === runningPoints[0].age);
 

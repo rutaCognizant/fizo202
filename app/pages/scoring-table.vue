@@ -1,65 +1,59 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { formatTime } from '~/utils'
+import { ref } from 'vue';
+import { formatTime } from '~/utils';
 
-const age = ref<number | null>(null)
-const gender = ref<'M' | 'F' | null>(null)
-const route = useRoute()
+const age = ref<number | null>(null);
+const gender = ref<'M' | 'F' | null>(null);
+const route = useRoute();
 if (route.query.age) {
-  age.value = parseInt(route.query.age as string, 10)
+  age.value = parseInt(route.query.age as string, 10);
 }
 if (route.query.gender) {
-  gender.value = route.query.gender as 'M' | 'F'
+  gender.value = route.query.gender as 'M' | 'F';
 }
 
-const {
-  pushup60,
-  pushup100,
-  crunches60,
-  crunches100,
-  running60,
-  running100,
-} = await $fetch('/api/get-targets', {
+const { pushup60, pushup100, crunches60, crunches100, running60, running100 } = await $fetch('/api/get-targets', {
   method: 'POST',
   body: {
     age: age.value,
     gender: gender.value,
   },
-})
-
+});
 </script>
 
 <template>
-  <div class="header">
-    <h1>🪖 FIZO202 Scoring Tables</h1>
-    <p>Age: {{ age }} | Gender: {{ gender === "M" ? "Male" : "Female" }}</p>
-  </div>
+  <body>
+    <div class="header">
+      <h1>🪖 FIZO202 Scoring Tables</h1>
+      <p>Age: {{ age }} | Gender: {{ gender === 'M' ? 'Male' : 'Female' }}</p>
+    </div>
 
-  <div class="targets">
-    <h3>🎯 Your Personal Targets</h3>
-    <div class="target-row">
-      <span class="exercise">💪 Push-ups</span>
-      <span class="target-60">60 pts: {{ pushup60 }}</span>
-      <span class="target-100">100 pts: {{ pushup100 }}</span>
+    <div class="targets">
+      <h3>🎯 Your Personal Targets</h3>
+      <div class="target-row">
+        <span class="exercise">💪 Push-ups</span>
+        <span class="target-60">60 pts: {{ pushup60 }}</span>
+        <span class="target-100">100 pts: {{ pushup100 }}</span>
+      </div>
+      <div class="target-row">
+        <span class="exercise">🤸‍♂️ Crunches</span>
+        <span class="target-60">60 pts: {{ crunches60 }}</span>
+        <span class="target-100">100 pts: {{ crunches100 }}</span>
+      </div>
+      <div class="target-row">
+        <span class="exercise">🏃‍♂️ 3000m Run</span>
+        <span class="target-60">60 pts: {{ formatTime(running60) }}</span>
+        <span class="target-100">100 pts: {{ formatTime(running100) }}</span>
+      </div>
     </div>
-    <div class="target-row">
-      <span class="exercise">🤸‍♂️ Crunches (Abs)</span>
-      <span class="target-60">60 pts: {{ crunches60 }}</span>
-      <span class="target-100">100 pts: {{ crunches100 }}</span>
-    </div>
-    <div class="target-row">
-      <span class="exercise">🏃‍♂️ 3000m Run</span>
-      <span class="target-60">60 pts: {{ formatTime(running60) }}</span>
-      <span class="target-100">100 pts: {{ formatTime(running100) }}</span>
-    </div>
-  </div>
 
-  <!-- <h2>📊 Complete Scoring Tables</h2>
+    <!-- <h2>📊 Complete Scoring Tables</h2>
   <table></table> -->
+  </body>
 </template>
 
 <style scoped>
-@import url("~/assets/styles.css");
+@import url('~/assets/styles.css');
 
 body {
   font-family: Inter, sans-serif;

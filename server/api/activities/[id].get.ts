@@ -1,5 +1,5 @@
-import { Activity, User } from "@prisma/client";
-import prisma from "~/../lib/prisma";
+import type { Activity, User } from '@prisma/client';
+import prisma from '~/../lib/prisma';
 
 interface ActivityResponse {
   activity: Activity;
@@ -10,12 +10,12 @@ interface ActivityResponse {
 }
 
 export default defineEventHandler(async (event): Promise<ActivityResponse> => {
-  const idParam = getRouterParam(event, "id");
+  const idParam = getRouterParam(event, 'id');
 
   if (!idParam) {
     throw createError({
       statusCode: 400,
-      statusMessage: "ID is required",
+      statusMessage: 'ID is required',
     });
   }
 
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event): Promise<ActivityResponse> => {
   if (isNaN(id)) {
     throw createError({
       statusCode: 400,
-      statusMessage: "ID must be a number",
+      statusMessage: 'ID must be a number',
     });
   }
 
@@ -35,47 +35,53 @@ export default defineEventHandler(async (event): Promise<ActivityResponse> => {
   if (!activity) {
     throw createError({
       statusCode: 404,
-      statusMessage: "Activity not found",
+      statusMessage: 'Activity not found',
     });
   }
 
   const user = activity.user;
 
-  const pushupPoints = await prisma.pushupPoints.findFirst({
+  const pushupPointsRez = await prisma.pushupPoints.findFirst({
+    select: { points: true },
     where: {
       age: { lte: user.age || 0 },
       gender: user.gender || undefined,
       count: { lte: activity.pushups },
     },
-    orderBy: [{ age: "desc" }, { count: "desc" }],
+    orderBy: [{ age: 'desc' }, { count: 'desc' }],
   });
+  const pushupPoints = Math.min(pushupPointsRez?.points || 0, 100);
   // console.log({ pushupPoints });
 
-  const crunchesPoints = await prisma.crunchesPoints.findFirst({
+  const crunchesPointsRez = await prisma.crunchesPoints.findFirst({
+    select: { points: true },
     where: {
       age: { lte: user.age || 0 },
       gender: user.gender || undefined,
       count: { lte: activity.crunches },
     },
-    orderBy: [{ age: "desc" }, { count: "desc" }],
+    orderBy: [{ age: 'desc' }, { count: 'desc' }],
   });
+  const crunchesPoints = Math.min(crunchesPointsRez?.points || 0, 100);
   // console.log({ crunchesPoints });
 
-  const runningPoints = await prisma.runningPoints.findFirst({
+  const runningPointsRez = await prisma.runningPoints.findFirst({
+    select: { points: true },
     where: {
       age: { lte: user.age || 0 },
       gender: user.gender || undefined,
       seconds: { gte: activity.running },
     },
-    orderBy: [{ age: "desc" }, { seconds: "asc" }],
+    orderBy: [{ age: 'desc' }, { seconds: 'asc' }],
   });
+  const runningPoints = Math.min(runningPointsRez?.points || 0, 100);
   // console.log({ runningPoints });
 
   return {
     activity,
     user: activity.user,
-    pushupPoints: pushupPoints?.points || 0,
-    crunchesPoints: crunchesPoints?.points || 0,
-    runningPoints: runningPoints?.points || 0,
+    pushupPoints,
+    crunchesPoints,
+    runningPoints,
   };
 });

@@ -8,16 +8,16 @@
       <div class="admin-header">
         <h1>📊 FIZO202 Admin Dashboard</h1>
         <p>Monitor fitness test results and system activity</p>
-        <div style="margin-top: 15px;">
+        <div style="margin-top: 15px">
           <a href="/" class="secondary-btn">🏠 Main Page</a>
-          <button onclick="logout()" class="secondary-btn" style="margin-left: 10px;">🚪 Logout</button>
+          <button onclick="logout()" class="secondary-btn" style="margin-left: 10px">🚪 Logout</button>
         </div>
       </div>
 
       <!-- Statistics Section -->
       <div class="admin-section">
         <h2>📈 System Statistics</h2>
-        <div class="stats-grid" id="statsGrid">
+        <div id="statsGrid" class="stats-grid">
           <!-- Stats will be loaded here -->
         </div>
       </div>
@@ -26,7 +26,7 @@
       <div class="admin-section">
         <h2>📋 All Fitness Results</h2>
         <div class="table-container">
-          <table class="data-table" id="resultsTable">
+          <table id="resultsTable" class="data-table">
             <thead>
               <tr>
                 <th>📧 Email</th>
@@ -52,7 +52,7 @@
       <div class="admin-section">
         <h2>📝 Activity Log</h2>
         <div class="table-container">
-          <table class="data-table" id="activityTable">
+          <table id="activityTable" class="data-table">
             <thead>
               <tr>
                 <th>🎬 Action</th>
@@ -73,7 +73,6 @@
   </div>
 </template>
 
-
 <style>
-@import url("~/assets/styles.css");
+@import url('~/assets/styles.css');
 </style>
