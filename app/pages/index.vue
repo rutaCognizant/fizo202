@@ -148,7 +148,7 @@ const submitResults = async (_event: Event) => {
 
         <!-- Submit Button -->
         <div class="submit-section">
-          <button type="submit" class="submit-btn">📊 Calculate My Fitness Score</button>
+          <button type="submit" class="submit-btn">📊 Calculate and Submit</button>
         </div>
       </form>
     </div>

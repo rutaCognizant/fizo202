@@ -4,8 +4,14 @@ import ExcelJS from 'exceljs';
 import { calculatePoints, getTargetsForUser } from '~~/server/lib';
 import { formatTime } from '~/utils';
 
+import type { Prisma, Activity, User } from '@prisma/client';
+
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+  const { startDate, endDate, includeAll } = await readBody(event);
+
+  const activitiesFrom = new Date(startDate);
+  const activitiesTo = new Date(endDate);
+  activitiesTo.setHours(23, 59, 59, 999);
 
   const workbook = new ExcelJS.Workbook();
 
@@ -99,11 +105,19 @@ export default defineEventHandler(async (event) => {
     };
   });
 
-  const activities = await prisma.activity.findMany({
+  const query: Prisma.ActivityFindManyArgs = {
+    where: {
+      AND: [{ createdAt: { gte: activitiesFrom } }, { createdAt: { lte: activitiesTo } }],
+    },
     include: { user: true },
     orderBy: { createdAt: 'desc' },
-    distinct: ['userId'],
-  });
+  };
+
+  if (!includeAll) {
+    query.distinct = ['userId'];
+  }
+
+  const activities = (await prisma.activity.findMany(query)) as (Activity & { user: User })[];
 
   for (const activity of activities) {
     const user = activity.user;

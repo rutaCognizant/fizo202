@@ -23,7 +23,7 @@ const { pushup60, pushup100, crunches60, crunches100, running60, running100 } = 
 </script>
 
 <template>
-  <div class="container">
+  <div id="scoring-table" class="container">
     <div class="header">
       <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
         <img src="~/assets/logo.png" alt="FIZO202 Logo" contain height="64px" />
@@ -68,7 +68,7 @@ const { pushup60, pushup100, crunches60, crunches100, running60, running100 } = 
 <style scoped>
 @import url('~/assets/styles.css');
 
-body {
+.scoring-table {
   font-family: Inter, sans-serif;
   margin: 20px;
   background: #f0f8f0;
@@ -101,6 +101,7 @@ body {
   background: #f8f9fa;
   border-radius: 8px;
   align-items: center;
+  gap: 32px;
 }
 
 .exercise {

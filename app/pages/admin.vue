@@ -1,8 +1,21 @@
 <script setup lang="ts">
 
+const now = new Date();
+const back = new Date();
+back.setDate(now.getDate() - 1); // Default to one day back
+
+const reportDate = ref(back.toISOString().split('T')[0] as string);
+const reportDateEnd = ref<string>(now.toISOString().split('T')[0] as string);
+const includeAll = ref<boolean>(false);
+
 const getReport = async () => {
   const reportData = await $fetch('/api/activities/report', {
     method: 'POST',
+    body: {
+      startDate: reportDate.value,
+      endDate: reportDateEnd.value,
+      includeAll: includeAll.value,
+    },
   });
 
   // Download xlsx file
@@ -36,17 +49,27 @@ const getReport = async () => {
       </div>
 
       <!-- Statistics Section -->
-      <div class="admin-section">
+      <form class="admin-section" @submit.prevent="getReport">
         <!-- <h2>📈 System Statistics</h2>
         <div id="statsGrid" class="stats-grid">
           Stats will be loaded here
         </div> -->
 
         <h2>📥 Download Reports</h2>
-        <button class="secondary-btn" style="margin-bottom: 20px" @click="getReport">
+        <div style="margin-bottom: 10px; gap: 10px; display: flex; align-items: center;">
+          Select Date Range:
+          From: <input id="reportDate" v-model="reportDate" type="date" class="date-input" required />
+          To: <input id="reportDateEnd" v-model="reportDateEnd" type="date" class="date-input" required />
+        </div>
+        <div style="margin-bottom: 20px; gap: 10px; display: flex; align-items: center;">
+          <input id="includeAll" v-model="includeAll" type="checkbox" name="includeAll" />
+          <label for="includeAll">Include all</label>
+        </div>
+
+        <button class="secondary-btn" style="margin-bottom: 20px" type="submit">
           Download Excel Report
         </button>
-      </div>
+      </form>
 
       <!-- All Results Section -->
       <!-- <div class="admin-section">
@@ -101,4 +124,8 @@ const getReport = async () => {
 
 <style>
 @import url('~/assets/styles.css');
+
+.date-input {
+  margin-right: 10px;
+}
 </style>

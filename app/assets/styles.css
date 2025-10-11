@@ -503,7 +503,8 @@ body {
   }
 
   .exercise-header {
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
     gap: 10px;
     text-align: center;
   }
