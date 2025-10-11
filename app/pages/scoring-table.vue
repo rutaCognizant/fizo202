@@ -23,27 +23,38 @@ const { pushup60, pushup100, crunches60, crunches100, running60, running100 } = 
 </script>
 
 <template>
-
-  <body>
+  <div class="container">
     <div class="header">
-      <h1>🪖 FIZO202 Scoring Tables</h1>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+        <img src="~/assets/logo.png" alt="FIZO202 Logo" contain height="64px" />
+        <h1>FIZO202 Scoring Table</h1>
+      </div>
       <p>Age: {{ age }} | Gender: {{ gender === 'M' ? 'Male' : 'Female' }}</p>
     </div>
 
     <div class="targets">
       <h3>🎯 Your Personal Targets</h3>
       <div class="target-row">
-        <span class="exercise">💪 Push-ups</span>
+        <div class="exercise-header" style="margin-bottom: 0;">
+          <img src="~/assets/pushups.png" alt="Push-ups" contain height="38px" />
+          <h3>Push-ups</h3>
+        </div>
         <span class="target-60">60 pts: {{ pushup60 }}</span>
         <span class="target-100">100 pts: {{ pushup100 }}</span>
       </div>
       <div class="target-row">
-        <span class="exercise">🤸‍♂️ Crunches</span>
+        <div class="exercise-header" style="margin-bottom: 0;">
+          <img src="~/assets/crunches.png" alt="Crunches" contain height="26px" />
+          <h3>Crunches</h3>
+        </div>
         <span class="target-60">60 pts: {{ crunches60 }}</span>
         <span class="target-100">100 pts: {{ crunches100 }}</span>
       </div>
       <div class="target-row">
-        <span class="exercise">🏃‍♂️ 3000m Run</span>
+        <div class="exercise-header" style="margin-bottom: 0;">
+          <img src="~/assets/running.png" alt="Running" contain height="34px" />
+          <h3>3000m Run</h3>
+        </div>
         <span class="target-60">60 pts: {{ formatTime(running60) }}</span>
         <span class="target-100">100 pts: {{ formatTime(running100) }}</span>
       </div>
@@ -51,7 +62,7 @@ const { pushup60, pushup100, crunches60, crunches100, running60, running100 } = 
 
     <!-- <h2>📊 Complete Scoring Tables</h2>
   <table></table> -->
-  </body>
+  </div>
 </template>
 
 <style scoped>
@@ -65,7 +76,7 @@ body {
 
 .header {
   text-align: center;
-  color: #2d5016;
+  color: #f0f8f0;
   margin-bottom: 30px;
 }
 
@@ -89,6 +100,7 @@ body {
   padding: 10px;
   background: #f8f9fa;
   border-radius: 8px;
+  align-items: center;
 }
 
 .exercise {

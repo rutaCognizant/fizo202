@@ -27,21 +27,30 @@ const goBack = () => {
 
       <div class="results-grid">
         <div id="pushupsResult" class="result-card">
-          <h3>💪 Push-ups</h3>
+          <div class="exercise-header" style="margin-bottom: 0;">
+            <img src="~/assets/pushups.png" alt="Push-ups" contain height="38px" />
+            <h3>Push-ups</h3>
+          </div>
           <div class="result-value">{{ activity.pushups }} reps</div>
           <div class="result-points">{{ pushupPoints }} points</div>
           <div class="result-status">{{ pushupPoints >= 60 ? '✅' : '❌' }}</div>
         </div>
 
         <div id="crunchesResult" class="result-card">
-          <h3>🤸‍♂️ Crunches</h3>
+          <div class="exercise-header" style="margin-bottom: 0;">
+            <img src="~/assets/crunches.png" alt="Crunches" contain height="26px" />
+            <h3>Crunches</h3>
+          </div>
           <div class="result-value">{{ activity.crunches }} reps</div>
           <div class="result-points">{{ crunchesPoints }} points</div>
           <div class="result-status">{{ crunchesPoints >= 60 ? '✅' : '❌' }}</div>
         </div>
 
         <div id="runResult" class="result-card">
-          <h3>🏃‍♂️ 3000m Run</h3>
+          <div class="exercise-header" style="margin-bottom: 0">
+            <img src="~/assets/running.png" alt="Running" contain height="34px" />
+            <h3>3000m Run</h3>
+          </div>
           <div class="result-value">
             {{ formatTime(activity.running) }}
           </div>

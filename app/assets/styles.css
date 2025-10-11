@@ -118,9 +118,10 @@ body {
 
 .exercise-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: left;
+  /* align-items: center; */
   margin-bottom: 15px;
+  gap: 6px;
 }
 
 .exercise-header h3 {
@@ -194,6 +195,10 @@ body {
   padding: 20px;
   text-align: center;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .result-card.pass {

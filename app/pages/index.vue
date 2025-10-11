@@ -53,7 +53,10 @@ const submitResults = async (_event: Event) => {
   <div class="container">
     <!-- Header -->
     <header class="header">
-      <h1>🪖 FIZO202 Fitness Tracker</h1>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+        <img src="~/assets/logo.png" alt="FIZO202 Logo" contain height="64px" />
+        <h1>FIZO202 Fitness Tracker</h1>
+      </div>
     </header>
 
     <!-- Main Form -->
@@ -105,7 +108,8 @@ const submitResults = async (_event: Event) => {
 
           <div class="exercise-group">
             <div class="exercise-header">
-              <h3>💪 Push-ups</h3>
+              <img src="~/assets/pushups.png" alt="Push-ups" contain height="42px" />
+              <h3>Push-ups</h3>
             </div>
             <div class="form-group">
               <label for="pushups">Number of repetitions</label>
@@ -115,7 +119,8 @@ const submitResults = async (_event: Event) => {
 
           <div class="exercise-group">
             <div class="exercise-header">
-              <h3>🤸‍♂️ Crunches</h3>
+              <img src="~/assets/crunches.png" alt="Crunches" contain height="32px" />
+              <h3>Crunches</h3>
             </div>
             <div class="form-group">
               <label for="crunches">Number of repetitions</label>
@@ -125,7 +130,8 @@ const submitResults = async (_event: Event) => {
 
           <div class="exercise-group">
             <div class="exercise-header">
-              <h3>🏃‍♂️ 3000m Run</h3>
+              <img src="~/assets/running.png" alt="Running" contain height="34px" />
+              <h3>3000m Run</h3>
             </div>
             <div class="form-row">
               <div class="form-group">
