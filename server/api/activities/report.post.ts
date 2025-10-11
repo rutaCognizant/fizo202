@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
   setupSingleColumn('B', 'Amžius', 10);
   setupSingleColumn('C', 'Lytis', 10);
   setupSingleColumn('P', 'Iš viso balų', 15);
-  setupSingleColumn('Q', 'Data', 15);
+  setupSingleColumn('Q', 'Data', 20);
 
   // Setup min/max columns
   setupDoubleColumn('D', 'E', 'Atsispaudimai', 'min', 'max', 10);
@@ -119,6 +119,8 @@ export default defineEventHandler(async (event) => {
 
   const activities = (await prisma.activity.findMany(query)) as (Activity & { user: User })[];
 
+  activities.sort((a, b) => a.user.name!.localeCompare(b.user.name!));
+
   for (const activity of activities) {
     const user = activity.user;
 
@@ -151,7 +153,7 @@ export default defineEventHandler(async (event) => {
       runningPoints,
 
       totalPoints,
-      date: activity.createdAt.toISOString().split('T')[0],
+      date: activity.createdAt.toLocaleString('lt-LT'),
     });
 
     row.eachCell({ includeEmpty: false }, (cell) => {
