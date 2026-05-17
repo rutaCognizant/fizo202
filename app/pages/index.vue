@@ -27,8 +27,8 @@ const openScoringTables = () => {
 
 const submitResults = async (_event: Event) => {
   const runningSeconds =
-    runMinutes.value !== null && runSeconds.value !== null
-      ? runMinutes.value * 60 + runSeconds.value
+    runMinutes.value !== null
+      ? runMinutes.value * 60 + (runSeconds.value ?? 0)
       : null;
 
   const results = await $fetch('/api/activities', {

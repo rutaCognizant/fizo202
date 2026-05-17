@@ -26,16 +26,19 @@ export async function calculatePoints(user: User, activity: Activity) {
   const crunchesPoints = Math.min(crunchesPointsRez?.points || 0, 100);
   // console.log({ crunchesPoints });
 
-  const runningPointsRez = await prisma.runningPoints.findFirst({
-    select: { points: true },
-    where: {
-      age: { lte: user.age || 0 },
-      gender: user.gender || undefined,
-      seconds: { gte: activity.running },
-    },
-    orderBy: [{ age: 'desc' }, { seconds: 'asc' }],
-  });
-  const runningPoints = Math.min(runningPointsRez?.points || 0, 100);
+  let runningPoints = 0;
+  if (activity.running !== 0) {
+    const runningPointsRez = await prisma.runningPoints.findFirst({
+      select: { points: true },
+      where: {
+        age: { lte: user.age || 0 },
+        gender: user.gender || undefined,
+        seconds: { gte: activity.running },
+      },
+      orderBy: [{ age: 'desc' }, { seconds: 'asc' }],
+    });
+    runningPoints = Math.min(runningPointsRez?.points || 0, 100);
+  }
   // console.log({ runningPoints });
 
   return {
