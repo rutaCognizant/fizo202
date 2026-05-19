@@ -2,19 +2,17 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../node_modules/.prisma/client"
+  provider = "prisma-client"
+  output   = "./generated"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "mysql"
 }
 
 model User {
   id         Int        @id @default(autoincrement())
   name       String?
-  age        Int?
   gender     String?
   activities Activity[]
 }
@@ -26,6 +24,7 @@ model Activity {
   running   Int      @default(0) // in seconds
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
+  userAge   Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

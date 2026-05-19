@@ -3,14 +3,14 @@ import { ref } from 'vue';
 import { formatTime } from '~/utils';
 
 const age = ref<number | null>(null);
-const gender = ref<'M' | 'F' | null>(null);
+const gender = ref<'male' | 'female' | null>(null);
 const route = useRoute();
 
 if (route.query.age) {
   age.value = parseInt(route.query.age as string, 10);
 }
 if (route.query.gender) {
-  gender.value = route.query.gender as 'M' | 'F';
+  gender.value = route.query.gender as 'male' | 'female';
 }
 
 const { pushup60, pushup100, crunches60, crunches100, running60, running100 } = await $fetch('/api/get-targets', {
@@ -20,6 +20,7 @@ const { pushup60, pushup100, crunches60, crunches100, running60, running100 } = 
     gender: gender.value,
   },
 });
+
 </script>
 
 <template>
@@ -29,7 +30,7 @@ const { pushup60, pushup100, crunches60, crunches100, running60, running100 } = 
         <img src="~/assets/logo.png" alt="FIZO202 Logo" contain height="64px" />
         <h1>FIZO202 Scoring Table</h1>
       </div>
-      <p>Age: {{ age }} | Gender: {{ gender === 'M' ? 'Male' : 'Female' }}</p>
+      <p>Age: {{ age }} | Gender: {{ gender === 'male' ? 'Male' : 'Female' }}</p>
     </div>
 
     <div class="targets">

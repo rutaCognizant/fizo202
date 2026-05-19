@@ -29,6 +29,70 @@ body {
   flex-direction: column;
 }
 
+/* History table styles */
+.history-table-wrapper {
+  overflow-x: auto;
+  margin-top: 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(16, 24, 40, 0.04);
+}
+
+/* History controls */
+.history-controls {
+  display: flex;
+  align-items: center;
+}
+.history-controls .download-btn {
+  margin-left: 8px;
+}
+.history-table caption {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  color: #1f2937;
+}
+.history-table th,
+.history-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eef2f7;
+  color: #374151;
+  font-size: 0.95rem;
+}
+.history-table thead th {
+  background: linear-gradient(#fafafa, #f6f6f7);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.history-table tbody tr:nth-child(even) {
+  background: #fbfbfd;
+}
+.history-table td.total {
+  font-weight: 700;
+  text-align: right;
+}
+.history-table td.empty {
+  text-align: center;
+  padding: 1.25rem;
+  color: #6b7280;
+}
+
+@media (max-width: 600px) {
+  /* Keep all columns visible; ensure horizontal scrolling and no wrapping */
+  .history-table th,
+  .history-table td {
+    white-space: nowrap;
+  }
+}
+
 /* Header */
 .header {
   text-align: center;
@@ -591,6 +655,14 @@ body {
 .scoring-btn:disabled:hover {
   transform: none;
   box-shadow: none;
+}
+
+/* Add spacing between scoring buttons */
+.scoring-tables-section .scoring-btn {
+  margin-right: 12px;
+}
+.scoring-tables-section .scoring-btn:last-child {
+  margin-right: 0;
 }
 
 .scoring-help {

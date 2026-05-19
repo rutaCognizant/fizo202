@@ -1,7 +1,6 @@
-import type { Activity, User } from '@prisma/client';
-import prisma from '~~/lib/prisma';
+import type { Activity, User } from '~~/prisma/generated/client';
 
-import { calculatePoints } from '~~/server/lib';
+import { calculatePoints } from '~~/server/utils';
 
 interface ActivityResponse {
   activity: Activity;

@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@prisma/nuxt', '@nuxt/eslint'],
+  modules: ['@nuxt/eslint'],
 
   vite: {
     resolve: {

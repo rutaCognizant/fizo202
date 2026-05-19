@@ -1,5 +1,4 @@
-import { getTargetsForUser } from '../lib';
-import type { User } from '@prisma/client';
+import { getTargets } from '../utils';
 
 interface TargetsResponse {
   pushup60: number;
@@ -13,10 +12,7 @@ interface TargetsResponse {
 export default defineEventHandler(async (event): Promise<TargetsResponse> => {
   const { age, gender } = await readBody(event);
 
-  const { pushup60, pushup100, crunches60, crunches100, running60, running100 } = await getTargetsForUser({
-    age,
-    gender,
-  } as User);
+  const { pushup60, pushup100, crunches60, crunches100, running60, running100 } = await getTargets(gender, age);
 
   return {
     pushup60,

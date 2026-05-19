@@ -29,3 +29,5 @@ logs
 
 # DB
 prisma/dev.db
+prisma/generated/
+prisma/migrations/migration_lock.toml

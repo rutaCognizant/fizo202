@@ -1,11 +1,11 @@
-import type { Activity, User } from '@prisma/client';
-import prisma from '~~/lib/prisma';
+import type { Activity, User } from '~~/prisma/generated/client';
+// import prisma from '~~/server/utils/prisma';
 
 export async function calculatePoints(user: User, activity: Activity) {
   const pushupPointsRez = await prisma.pushupPoints.findFirst({
     select: { points: true },
     where: {
-      age: { lte: user.age || 0 },
+      age: { lte: activity.userAge || 0 },
       gender: user.gender || undefined,
       count: { lte: activity.pushups },
     },
@@ -17,7 +17,7 @@ export async function calculatePoints(user: User, activity: Activity) {
   const crunchesPointsRez = await prisma.crunchesPoints.findFirst({
     select: { points: true },
     where: {
-      age: { lte: user.age || 0 },
+      age: { lte: activity.userAge || 0 },
       gender: user.gender || undefined,
       count: { lte: activity.crunches },
     },
@@ -31,7 +31,7 @@ export async function calculatePoints(user: User, activity: Activity) {
     const runningPointsRez = await prisma.runningPoints.findFirst({
       select: { points: true },
       where: {
-        age: { lte: user.age || 0 },
+        age: { lte: activity.userAge || 0 },
         gender: user.gender || undefined,
         seconds: { gte: activity.running },
       },
@@ -49,9 +49,8 @@ export async function calculatePoints(user: User, activity: Activity) {
   };
 }
 
-export async function getTargetsForUser(user: User) {
-  const gender = user.gender!;
-  const age = Math.max(18, Math.min(65, user.age!)); // Clamp age between 18 and 65
+export async function getTargets(gender: string, age: number) {
+  age = Math.max(18, Math.min(65, age)); // Clamp age between 18 and 65
 
   let pushupPoints = await prisma.pushupPoints.findMany({
     where: {
@@ -60,7 +59,7 @@ export async function getTargetsForUser(user: User) {
     },
     orderBy: { age: 'desc' },
   });
-  pushupPoints = pushupPoints.filter((e) => e.age === pushupPoints[0].age);
+  pushupPoints = pushupPoints.filter((e) => e.age === pushupPoints.at(0)?.age);
 
   const pushup60 = pushupPoints.find((e) => e.points === 60)?.count || 0;
   const pushup100 = pushupPoints.find((e) => e.points === 100)?.count || 0;
@@ -72,7 +71,7 @@ export async function getTargetsForUser(user: User) {
     },
     orderBy: { age: 'desc' },
   });
-  crunchesPoints = crunchesPoints.filter((e) => e.age === crunchesPoints[0].age);
+  crunchesPoints = crunchesPoints.filter((e) => e.age === crunchesPoints.at(0)?.age);
 
   const crunches60 = crunchesPoints.find((e) => e.points === 60)?.count || 0;
   const crunches100 = crunchesPoints.find((e) => e.points === 100)?.count || 0;
@@ -84,7 +83,7 @@ export async function getTargetsForUser(user: User) {
     },
     orderBy: { age: 'desc' },
   });
-  runningPoints = runningPoints.filter((e) => e.age === runningPoints[0].age);
+  runningPoints = runningPoints.filter((e) => e.age === runningPoints.at(0)?.age);
 
   const running60 = runningPoints.find((e) => e.points === 60)?.seconds || 0;
   const running100 = runningPoints.find((e) => e.points === 100)?.seconds || 0;

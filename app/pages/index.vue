@@ -25,6 +25,23 @@ const openScoringTables = () => {
   );
 };
 
+
+const historyDisabled = computed(() => {
+  return name.value.trim() === '';
+});
+
+const openHistory = () => {
+  const width = 900;
+  const height = 700;
+  const left = (window.innerWidth - width) / 2;
+  const top = (window.innerHeight - height) / 2;
+  window.open(
+    `/history?name=${encodeURIComponent(name.value.trim())}`,
+    'Activity History',
+    `width=${width},height=${height},top=${top},left=${left}`
+  );
+};
+
 const submitResults = async (_event: Event) => {
   const runningSeconds =
     runMinutes.value !== null
@@ -68,12 +85,12 @@ const submitResults = async (_event: Event) => {
           <div class="form-row">
             <div class="form-group">
               <label for="nickname">🏷️ Nickname</label>
-              <input id="nickname" v-model="name" type="text" name="nickname" required />
+              <input id="nickname" v-model.trim="name" type="text" name="nickname" required />
             </div>
             <div class="form-group">
               <label for="user-age">🎂 Age</label>
-              <input id="user-age" v-model="age" type="number" name="user-age" min="1" max="120" autocomplete="off"
-                autocapitalize="off" autocorrect="off" spellcheck="false" required />
+              <input id="user-age" v-model.number="age" type="number" name="user-age" min="1" max="120"
+                autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required />
             </div>
           </div>
           <div class="form-row">
@@ -97,6 +114,8 @@ const submitResults = async (_event: Event) => {
         <div class="scoring-tables-section">
           <button type="button" class="scoring-btn" :disabled="scoringTableDisabled" @click="openScoringTables">📋 View
             Scoring Tables</button>
+          <button type="button" class="scoring-btn" :disabled="historyDisabled" @click="openHistory">📋 View
+            History</button>
           <!-- <p class="scoring-help">
             See what you need for 60 and 100 points based on your age
           </p> -->
@@ -113,7 +132,7 @@ const submitResults = async (_event: Event) => {
             </div>
             <div class="form-group">
               <label for="pushups">Number of repetitions</label>
-              <input id="pushups" v-model="pushups" type="number" name="pushups" required />
+              <input id="pushups" v-model.number="pushups" type="number" name="pushups" required />
             </div>
           </div>
 
@@ -124,7 +143,7 @@ const submitResults = async (_event: Event) => {
             </div>
             <div class="form-group">
               <label for="crunches">Number of repetitions</label>
-              <input id="crunches" v-model="crunches" type="number" name="crunches" required />
+              <input id="crunches" v-model.number="crunches" type="number" name="crunches" required />
             </div>
           </div>
 
@@ -136,11 +155,12 @@ const submitResults = async (_event: Event) => {
             <div class="form-row">
               <div class="form-group">
                 <label for="runMinutes">Minutes</label>
-                <input id="runMinutes" v-model="runMinutes" type="number" name="runMinutes" min="0" max="59" required />
+                <input id="runMinutes" v-model.number="runMinutes" type="number" name="runMinutes" min="0" max="59"
+                  required />
               </div>
               <div class="form-group">
                 <label for="runSeconds">Seconds</label>
-                <input id="runSeconds" v-model="runSeconds" type="number" name="runSeconds" min="0" max="59" required />
+                <input id="runSeconds" v-model.number="runSeconds" type="number" name="runSeconds" min="0" max="59" />
               </div>
             </div>
           </div>

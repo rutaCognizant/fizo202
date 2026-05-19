@@ -1,7 +1,19 @@
-import ExcelJS from 'exceljs';
-import { PrismaClient } from '@prisma/client';
+import 'dotenv/config';
 
-const prisma = new PrismaClient();
+import ExcelJS from 'exceljs';
+import { PrismaMariaDb } from '@prisma/adapter-mariadb';
+import { PrismaClient } from '../prisma/generated/client';
+
+const prisma = new PrismaClient({
+  adapter: new PrismaMariaDb({
+    host: process.env.DATABASE_HOST || 'localhost',
+    port: Number(process.env.DATABASE_PORT || 3306),
+    user: process.env.DATABASE_USER || 'root',
+    password: process.env.DATABASE_PASS || '',
+    database: process.env.DATABASE_NAME || 'fizo202',
+    connectionLimit: 5,
+  }),
+});
 
 function importPushupPoints(pushups: ExcelJS.Worksheet) {
   const pushupPoints: Array<{

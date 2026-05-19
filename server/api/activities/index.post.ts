@@ -1,4 +1,4 @@
-import prisma from '~/../lib/prisma';
+// import prisma from '~~/server/utils/prisma';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -37,7 +37,6 @@ export default defineEventHandler(async (event) => {
     user = await prisma.user.create({
       data: {
         name,
-        age,
         gender,
       },
     });
@@ -45,7 +44,6 @@ export default defineEventHandler(async (event) => {
     await prisma.user.update({
       where: { id: user?.id ?? '' },
       data: {
-        age,
         gender,
       },
     });
@@ -57,6 +55,7 @@ export default defineEventHandler(async (event) => {
       pushups,
       crunches,
       running,
+      userAge: age,
       userId: user.id,
     },
   });
