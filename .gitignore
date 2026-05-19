@@ -27,6 +27,9 @@ logs
 
 /app/generated/prisma
 
+scripts/deploy.sh
+*.tar.gz
+
 # DB
 prisma/dev.db
 prisma/generated/
