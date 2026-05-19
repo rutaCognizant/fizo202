@@ -6,6 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev --host",
     "generate": "nuxt generate",
+    "postbuild": "node scripts/inject-dotenv-to-server-entry.mjs",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "npm run lint:eslint && npm run lint:prettier",
