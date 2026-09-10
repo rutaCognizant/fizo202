@@ -33,3 +33,17 @@ npm run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+# Prisma
+
+To generate prisma client:
+
+```bash
+npx prisma generate
+```
+
+To run migrations:
+
+```bash
+npx prisma migrate dev
+```

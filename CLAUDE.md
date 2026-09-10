@@ -34,15 +34,20 @@ There is no test suite. Lint is the only automated check — run `npm run lint` 
 - [app/pages/history.vue](app/pages/history.vue) — activity history for a nickname (`?name=`) + XLSX download.
 - [app/pages/scoring-table.vue](app/pages/scoring-table.vue) — personal 60/100-point targets for `?age=&gender=`.
 - [app/pages/admin.vue](app/pages/admin.vue) — date-range XLSX report download. **No auth** (login is commented out).
+- [app/pages/admin-progress.vue](app/pages/admin-progress.vue) — compares two tournaments and shows per-participant
+  deltas (sortable). Linked from the admin dashboard; lives at `/admin-progress` rather than `/admin/progress`
+  because a `pages/admin/` directory would turn `admin.vue` into a parent layout.
 - [app/utils.ts](app/utils.ts) — `formatTime(seconds)`; imported by both client pages and server routes via `~/utils`.
 - [server/utils/points.ts](server/utils/points.ts) — `calculatePoints`, `getTargets`; all scoring logic lives here.
+- [server/utils/tournaments.ts](server/utils/tournaments.ts) — `listTournaments`, `tournamentActivities`, date-key helpers.
 - [server/utils/prisma.ts](server/utils/prisma.ts) — `prisma` singleton (cached on `globalThis` outside production).
 - [server/utils/xlsx.ts](server/utils/xlsx.ts) — `buildWorkbookFromRows`, the single hardcoded A–Q report layout.
 - [prisma/schema.prisma](prisma/schema.prisma) — `User`, `Activity`, and the three lookup tables
   `PushupPoints` / `CrunchesPoints` / `RunningPoints`.
 
 API routes: `POST /api/activities`, `GET /api/activities/:id`, `GET /api/activities/history`,
-`GET /api/activities/history-xlsx`, `POST /api/activities/report`, `POST /api/get-targets`.
+`GET /api/activities/history-xlsx`, `POST /api/activities/report`, `POST /api/get-targets`,
+`GET /api/tournaments`, `GET /api/tournaments/compare`.
 
 ## Things that will bite you
 
@@ -67,6 +72,13 @@ drop this step, and re-run `npm run build` (not bare `nuxt build`) after changin
 pick the highest `age <= userAge`, then the best row whose `count <= reps` (or `seconds >= time` for
 running), and clamp to 100. `getTargets` clamps age to 18–65; `calculatePoints` does not. A `running`
 value of `0` means "not performed" and scores 0 points.
+
+**A "tournament" is derived, not stored.** There is no tournament table — `listTournaments` groups activities by
+local calendar day and keeps days with more than `MIN_TOURNAMENT_PARTICIPANTS` (5) distinct participants. Grouping
+uses local time (`toDateKey`), matching the `lt-LT` dates in the XLSX reports, and a participant with several entries
+on one day is represented by their latest, same as the report's `distinct: ['userId']`. In the progress comparison a
+0 count or 0 run time means the exercise was not performed, so `buildDelta` nulls that exercise's deltas and drops it
+from the total delta — Δ total is therefore not always `2nd total − 1st total`.
 
 **Gender is a bare string.** Values are `'male'` / `'female'` everywhere in the DB and API. The
 import scripts map the Lithuanian `V`/`M` sheet headers onto those. Note

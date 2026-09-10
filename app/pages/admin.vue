@@ -44,6 +44,7 @@ const getReport = async () => {
         <p>Monitor fitness test results and system activity</p>
         <div style="margin-top: 15px">
           <a href="/" class="secondary-btn">🏠 Main Page</a>
+          <a href="/admin-progress" class="secondary-btn" style="margin-left: 10px">📈 Tournament Progress</a>
           <button onclick="logout()" class="secondary-btn" style="margin-left: 10px">🚪 Logout</button>
         </div>
       </div>
